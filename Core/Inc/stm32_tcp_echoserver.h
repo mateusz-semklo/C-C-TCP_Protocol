@@ -5,7 +5,10 @@
 
 #define sizze 256
 
-volatile char dane1[sizze];
+volatile  char dane1[sizze];
+volatile  char dane2[sizze];
+volatile  char dane3[sizze];
+volatile  char dane4[sizze];
 char *rendered;
 
 struct tcp_echoserver_struct{

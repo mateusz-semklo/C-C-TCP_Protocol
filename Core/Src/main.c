@@ -59,7 +59,7 @@
 
 /* USER CODE BEGIN PV */
 
-static const char *js = "{\"user\":\"johndoe\",\"admin\":99}";
+static const uint8_t *js = "{\"user\":\"johndoe\",\"admin\":\"99\"}";
 
 
 static const char *dd;
@@ -120,15 +120,11 @@ int main(void)
 
   cJSON *format = cJSON_GetObjectItemCaseSensitive(root, "user");
   cJSON *format1 = cJSON_GetObjectItemCaseSensitive(root, "admin");
- dd= cJSON_GetStringValue(format);
- e = cJSON_GetNumberValue(format1);
+
  cJSON_SetValuestring(format, "sdff");
- cJSON_SetNumberHelper(format1, 56);
- cJSON_AddNumberToObject(root, "test", 345);
 
 
-
- rendered = cJSON_GetStringValue(root);
+ rendered = cJSON_Print(root);
 
 
   /* USER CODE END 2 */
