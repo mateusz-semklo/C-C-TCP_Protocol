@@ -159,9 +159,7 @@ static err_t tcp_echoserver_accept(void *arg, struct tcp_pcb *newpcb, err_t err)
 static err_t tcp_echoserver_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err)
 {
   struct tcp_echoserver_struct *es;
-  ed=es;
   err_t ret_err;
-  uint16_t i;
 
   LWIP_ASSERT("arg != NULL",arg != NULL);
 
@@ -205,15 +203,6 @@ static err_t tcp_echoserver_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p
     /* write data to structuce*/
     es->p = p;
 
-
-    for(i=0;i<sizze;i++)
-    	dane1[i]=0;
-
-
-    sprintf(dane1, "%s",p->payload);
-
-
-
     tcp_sent(tpcb, tcp_echoserver_sent);
 
     /* Send data */
@@ -227,14 +216,6 @@ static err_t tcp_echoserver_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p
     if(es->p == NULL)
     {
       es->p = p;
-
-
-
-      //for(i=0;i<sizze;i++)
-     // 	dane1[i]=0;
-
-
-      sprintf(dane1, "%s",p->payload);
 
       tcp_echoserver_send(tpcb, es);
     }
@@ -298,7 +279,6 @@ static err_t tcp_echoserver_poll(void *arg, struct tcp_pcb *tpcb)
   err_t ret_err;
   struct tcp_echoserver_struct *es;
 
-
   es = (struct tcp_echoserver_struct *)arg;
   if (es != NULL)
   {
@@ -337,9 +317,7 @@ static err_t tcp_echoserver_poll(void *arg, struct tcp_pcb *tpcb)
  */
 static err_t tcp_echoserver_sent(void *arg, struct tcp_pcb *tpcb, u16_t len)
 {
-
   struct tcp_echoserver_struct *es;
-
 
   (void)len;
 
@@ -376,15 +354,15 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 {
   struct pbuf *ptr;
 
-  uint16_t b;
-    b=0;
-
 #if USART_COPY == 1
   char dane[256] = {0};
   char buffer[256] = {0};
 #endif
 
   err_t wr_err = ERR_OK;
+
+  for(int i=0; i<sizze;i++)
+	  dane1[i]=0;
 
   /* tcp_sndbuf - returns number of bytes in space that is avaliable in output queue */
   while ((wr_err == ERR_OK) && (es->p != NULL) && (es->p->len <= tcp_sndbuf(tpcb)))
@@ -397,8 +375,7 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
     for(uint8_t i = 0; i<ptr->len; i++)
     {
     	buffer[i] = dane[i];
-    	dane3[i]=dane[i];
-    	dane4[i]=buffer[i];
+    	dane1[i]=dane[i];
     }
 
     /* Close connection */
@@ -411,11 +388,9 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 #endif
 
 
-  //  sprintf(dane2, "%s",(char *)ptr->payload);
 
-    wr_err = tcp_write(tpcb, buffereth, strlen(buffereth), 1);
+    //wr_err = tcp_write(tpcb, buffereth, strlen(buffereth), 1);
     wr_err = tcp_write(tpcb, ptr->payload, ptr->len, 1);
-   // wr_err = tcp_write(tpcb, rendered, strlen(rendered), 1);
 
     /* Clear data */
     memset(dane, 0x00, sizeof(dane));

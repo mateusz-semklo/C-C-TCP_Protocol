@@ -1,8 +1,8 @@
 stm32_tcp_echoserver.c:80:6:tcp_echoserver_init	8	static
 stm32_tcp_echoserver.c:107:14:tcp_echoserver_accept	32	static
 stm32_tcp_echoserver.c:159:14:tcp_echoserver_recv	40	static
-stm32_tcp_echoserver.c:276:13:tcp_echoserver_error	24	static
-stm32_tcp_echoserver.c:296:14:tcp_echoserver_poll	24	static
-stm32_tcp_echoserver.c:338:14:tcp_echoserver_sent	32	static
-stm32_tcp_echoserver.c:375:13:tcp_echoserver_send	544	static
-stm32_tcp_echoserver.c:468:13:tcp_echoserver_connection_close	16	static
+stm32_tcp_echoserver.c:257:13:tcp_echoserver_error	24	static
+stm32_tcp_echoserver.c:277:14:tcp_echoserver_poll	24	static
+stm32_tcp_echoserver.c:318:14:tcp_echoserver_sent	32	static
+stm32_tcp_echoserver.c:353:13:tcp_echoserver_send	552	static
+stm32_tcp_echoserver.c:440:13:tcp_echoserver_connection_close	16	static
