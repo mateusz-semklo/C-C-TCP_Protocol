@@ -1,0 +1,2 @@
+json_c_version.c:11:13:json_c_version	4	static
+json_c_version.c:16:5:json_c_version_num	4	static

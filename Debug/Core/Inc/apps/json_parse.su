@@ -1,0 +1,5 @@
+json_parse.c:39:13:showmem	4	static
+json_parse.c:49:12:parseit	32848	static
+json_parse.c:117:12:showobj	24	static
+json_parse.c:141:13:usage	32	static
+json_parse.c:159:5:main	24	static
