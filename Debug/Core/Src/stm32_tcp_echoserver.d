@@ -60,7 +60,8 @@ Core/Src/stm32_tcp_echoserver.o: ../Core/Src/stm32_tcp_echoserver.c \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/prot/ip.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/icmp.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/prot/icmp.h \
- ../Core/Inc/stm32_tcp_echoserver.h ../Core/Inc/main.h
+ ../Core/Inc/stm32_tcp_echoserver.h ../Core/Inc/main.h \
+ ../Core/Inc/cJSON.h ../Core/Inc/cJSON.h
 
 ../Middlewares/Third_Party/LwIP/src/include/lwip/debug.h:
 
@@ -189,3 +190,7 @@ Core/Src/stm32_tcp_echoserver.o: ../Core/Src/stm32_tcp_echoserver.c \
 ../Core/Inc/stm32_tcp_echoserver.h:
 
 ../Core/Inc/main.h:
+
+../Core/Inc/cJSON.h:
+
+../Core/Inc/cJSON.h:

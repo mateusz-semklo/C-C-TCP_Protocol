@@ -63,7 +63,8 @@ LWIP/App/lwip.o: ../LWIP/App/lwip.c ../LWIP/App/lwip.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/timeouts.h \
  ../LWIP/Target/ethernetif.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/init.h \
- ../Core/Inc/stm32_tcp_echoserver.h ../Core/Inc/main.h
+ ../Core/Inc/stm32_tcp_echoserver.h ../Core/Inc/main.h \
+ ../Core/Inc/cJSON.h
 
 ../LWIP/App/lwip.h:
 
@@ -200,3 +201,5 @@ LWIP/App/lwip.o: ../LWIP/App/lwip.c ../LWIP/App/lwip.h \
 ../Core/Inc/stm32_tcp_echoserver.h:
 
 ../Core/Inc/main.h:
+
+../Core/Inc/cJSON.h:

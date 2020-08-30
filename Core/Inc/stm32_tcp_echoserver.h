@@ -2,14 +2,14 @@
 #define STM32_TCP_ECHOSERVER_H_
 
 #include "main.h"
+#include "cJSON.h"
 
 #define sizze 256
 
 volatile  char dane1[sizze];
-volatile  char dane2[sizze];
-volatile  char dane3[sizze];
-volatile  char dane4[sizze];
-char *rendered;
+
+volatile char *rendered;
+volatile cJSON * root;
 
 struct tcp_echoserver_struct{
   u8_t state;             /* current connection state */
@@ -18,9 +18,7 @@ struct tcp_echoserver_struct{
   struct pbuf *p;         /* pointer on the received/to be transmitted pbuf */
 };
 
-struct tcp_echoserver_struct *ed;
 
-extern struct pbuf *ppp;
 //--------------------------------------------------------------
 /* STM32 Mac adress */
 #define myMAC_ADDR0   0x00

@@ -38,6 +38,7 @@
 #include "lwip/stats.h"
 #include "lwip/tcp.h"
 #include "stm32_tcp_echoserver.h"
+#include "cJSON.h"
 
 
 #if LWIP_TCP
@@ -375,7 +376,7 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
     for(uint8_t i = 0; i<ptr->len; i++)
     {
     	buffer[i] = dane[i];
-    	dane1[i]=dane[i];
+    	//dane1[i]=dane[i];
     }
 
     /* Close connection */
@@ -387,10 +388,18 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
     }
 #endif
 
+     root = cJSON_Parse((char *)ptr->payload);
+
+
+
+    rendered = cJSON_Print(root);
+    sprintf(dane1, "%s",(char *)rendered);
+    cJSON_Delete(root);
 
 
     //wr_err = tcp_write(tpcb, buffereth, strlen(buffereth), 1);
-    wr_err = tcp_write(tpcb, ptr->payload, ptr->len, 1);
+   // wr_err = tcp_write(tpcb, ptr->payload, ptr->len, 1);
+    wr_err = tcp_write(tpcb, dane1, strlen(rendered), 1);
 
     /* Clear data */
     memset(dane, 0x00, sizeof(dane));
