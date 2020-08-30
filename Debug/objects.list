@@ -1,5 +1,6 @@
 "Core/Src/cJSON.o"
 "Core/Src/cJSON_Utils.o"
+"Core/Src/dma.o"
 "Core/Src/eth.o"
 "Core/Src/gpio.o"
 "Core/Src/jsmn.o"
