@@ -59,7 +59,7 @@
 
 /* USER CODE BEGIN PV */
 
-
+int y;
 
 /* USER CODE END PV */
 
@@ -67,6 +67,18 @@
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin==GPIO_PIN_13)
+	{
+		HAL_UART_Transmit_DMA(&huart2, jstring, strlen(jstring));
+y++;
+
+
+
+	}
+
+}
 
 
 /* USER CODE END PFP */

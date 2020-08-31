@@ -44,10 +44,6 @@
 #if LWIP_TCP
 
 static struct tcp_pcb *tcp_echoserver_pcb;
-//struct tcp_echoserver_struct *ed;
-
-char *wsk="{\"age\":\"ddd\", \"name\":345}";
-
 
 
 /* States of echo protocol */
@@ -362,8 +358,8 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 
   err_t wr_err = ERR_OK;
 
-  for(int i=0; i<sizze;i++)
-	  dane1[i]=0;
+  for(int i=0; i<size;i++)
+	  jstring[i]=0;
 
   /* tcp_sndbuf - returns number of bytes in space that is avaliable in output queue */
   while ((wr_err == ERR_OK) && (es->p != NULL) && (es->p->len <= tcp_sndbuf(tpcb)))
@@ -388,18 +384,29 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
     }
 #endif
 
+     char *rendered;
+     cJSON * root;
+     cJSON * nastawy;
+
      root = cJSON_Parse((char *)ptr->payload);
+     nastawy = cJSON_GetObjectItemCaseSensitive(root, "nastawy");
+
+     rendered = cJSON_Print(root);
+
+    sprintf(allow_settings, "%s",(char *)(cJSON_GetStringValue(nastawy)));
+    sprintf(jstring, "%s",(char *)rendered);
+
+    if(allow_settings[0]=='t')
+    	//HAL_UART_Transmit_DMA(&huart2, jstring, strlen(jstring));
 
 
-
-    rendered = cJSON_Print(root);
-    sprintf(dane1, "%s",(char *)rendered);
+    cJSON_Delete(nastawy);
     cJSON_Delete(root);
 
 
     //wr_err = tcp_write(tpcb, buffereth, strlen(buffereth), 1);
    // wr_err = tcp_write(tpcb, ptr->payload, ptr->len, 1);
-    wr_err = tcp_write(tpcb, dane1, strlen(rendered), 1);
+    wr_err = tcp_write(tpcb, jstring, strlen(rendered), 1);
 
     /* Clear data */
     memset(dane, 0x00, sizeof(dane));

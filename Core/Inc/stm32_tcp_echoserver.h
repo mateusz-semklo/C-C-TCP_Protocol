@@ -3,13 +3,15 @@
 
 #include "main.h"
 #include "cJSON.h"
+#include "usart.h"
 
-#define sizze 256
+#define size 256
 
-volatile  char dane1[sizze];
+volatile  char jstring[size];
+volatile  char allow_settings[10];
 
-volatile char *rendered;
-volatile cJSON * root;
+
+
 
 struct tcp_echoserver_struct{
   u8_t state;             /* current connection state */

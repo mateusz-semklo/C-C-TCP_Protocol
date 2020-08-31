@@ -27,6 +27,9 @@
 
 /* USER CODE BEGIN 0 */
 #include "stm32_tcp_echoserver.h"
+
+
+
 /* USER CODE END 0 */
 /* Private function prototypes -----------------------------------------------*/
 /* ETH Variables initialization ----------------------------------------------*/

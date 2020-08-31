@@ -64,7 +64,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/timeouts.h \
  ../LWIP/Target/ethernetif.h ../Core/Inc/usart.h ../Core/Inc/usb_otg.h \
  ../Core/Inc/gpio.h ../Core/Inc/stm32_tcp_echoserver.h \
- ../Core/Inc/cJSON.h \
+ ../Core/Inc/cJSON.h ../Core/Inc/usart.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/prot/ethernet.h \
  ../Core/Inc/cJSON.h ../Core/Inc/cJSON_Utils.h
 
@@ -211,6 +211,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/stm32_tcp_echoserver.h:
 
 ../Core/Inc/cJSON.h:
+
+../Core/Inc/usart.h:
 
 ../Middlewares/Third_Party/LwIP/src/include/lwip/prot/ethernet.h:
 
