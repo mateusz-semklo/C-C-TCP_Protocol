@@ -20,7 +20,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "dma.h"
 #include "lwip.h"
 #include "usart.h"
 #include "usb_otg.h"
@@ -59,7 +58,7 @@
 
 /* USER CODE BEGIN PV */
 
-int y;
+
 
 /* USER CODE END PV */
 
@@ -71,9 +70,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(GPIO_Pin==GPIO_PIN_13)
 	{
-		HAL_UART_Transmit_DMA(&huart2, jstring, strlen(jstring));
-y++;
-
 
 
 	}
@@ -116,7 +112,6 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
   MX_LWIP_Init();

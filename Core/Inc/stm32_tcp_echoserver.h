@@ -8,7 +8,7 @@
 #define size 256
 
 volatile  char jstring[size];
-volatile  char allow_settings[10];
+volatile  char settings_allow[10];
 
 
 

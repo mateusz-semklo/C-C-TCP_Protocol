@@ -386,21 +386,21 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 
      char *rendered;
      cJSON * root;
-     cJSON * nastawy;
+     cJSON * settings;
 
      root = cJSON_Parse((char *)ptr->payload);
-     nastawy = cJSON_GetObjectItemCaseSensitive(root, "nastawy");
+     settings = cJSON_GetObjectItemCaseSensitive(root, "settings");
 
      rendered = cJSON_Print(root);
 
-    sprintf(allow_settings, "%s",(char *)(cJSON_GetStringValue(nastawy)));
+    sprintf(settings_allow, "%s",(char *)(cJSON_GetStringValue(settings)));
     sprintf(jstring, "%s",(char *)rendered);
 
-    if(allow_settings[0]=='t')
-    	//HAL_UART_Transmit_DMA(&huart2, jstring, strlen(jstring));
+    if(settings_allow[0]=='t')
+    	HAL_UART_Transmit_IT(&huart2, jstring, strlen(jstring));
 
 
-    cJSON_Delete(nastawy);
+    cJSON_Delete(settings);
     cJSON_Delete(root);
 
 

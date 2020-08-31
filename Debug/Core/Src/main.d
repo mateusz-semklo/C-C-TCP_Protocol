@@ -31,7 +31,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pcd.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_ll_usb.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pcd_ex.h \
- ../Core/Inc/dma.h ../Core/Inc/main.h ../LWIP/App/lwip.h \
+ ../LWIP/App/lwip.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/opt.h \
  ../LWIP/Target/lwipopts.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/debug.h \
@@ -62,9 +62,10 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/LwIP/src/include/netif/ethernet.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/dhcp.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/timeouts.h \
- ../LWIP/Target/ethernetif.h ../Core/Inc/usart.h ../Core/Inc/usb_otg.h \
- ../Core/Inc/gpio.h ../Core/Inc/stm32_tcp_echoserver.h \
- ../Core/Inc/cJSON.h ../Core/Inc/usart.h \
+ ../LWIP/Target/ethernetif.h ../Core/Inc/usart.h ../Core/Inc/main.h \
+ ../Core/Inc/usb_otg.h ../Core/Inc/gpio.h \
+ ../Core/Inc/stm32_tcp_echoserver.h ../Core/Inc/cJSON.h \
+ ../Core/Inc/usart.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/prot/ethernet.h \
  ../Core/Inc/cJSON.h ../Core/Inc/cJSON_Utils.h
 
@@ -134,10 +135,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pcd_ex.h:
 
-../Core/Inc/dma.h:
-
-../Core/Inc/main.h:
-
 ../LWIP/App/lwip.h:
 
 ../Middlewares/Third_Party/LwIP/src/include/lwip/opt.h:
@@ -203,6 +200,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../LWIP/Target/ethernetif.h:
 
 ../Core/Inc/usart.h:
+
+../Core/Inc/main.h:
 
 ../Core/Inc/usb_otg.h:
 
