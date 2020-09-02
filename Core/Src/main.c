@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "lwip.h"
+#include "tim.h"
 #include "usart.h"
 #include "usb_otg.h"
 #include "gpio.h"
@@ -32,7 +33,24 @@
 #include "ethernet.h"
 #include "cJSON.h"
 #include "cJSON_Utils.h"
+#include "stdint.h"
+#include "math.h"
+#include "stdio.h"
+#include "stdlib.h"
 
+#define SYSCLK_FREQ      160000000uL
+
+////////// TIMER 8 /////////////////////////////////////////////////////////////
+#define TIM8_ARR  (65500-1)
+#define TIM8_PSC  (10-1)
+#define freq_TIM8 (SYSCLK_FREQ/(TIM8_PSC+1))  //obr/min mechaniczne
+#define revolution_per_min ((freq_TIM8*60.0)/(720.0))
+////////// TIMER 8 /////////////////////////////////////////////////////////////
+
+////////// TIMER 3 encoder /////////////////////////////////////////////////////////////
+#define TIM3_ARR  719
+#define TIM3_PSC  0
+////////// TIMER 3 /////////////////////////////////////////////////////////////
 
 
 /* USER CODE END Includes */
@@ -57,7 +75,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+volatile uint32_t capture_tim8_ccr1;
+volatile float_t speed;
 
 
 /* USER CODE END PV */
@@ -115,10 +134,20 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
   MX_LWIP_Init();
+  MX_TIM3_Init();
+  MX_TIM8_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   tcp_echoserver_init();
 
+ TIM3->ARR=TIM3_ARR;
+ TIM3->PSC=TIM3_PSC;
+ HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_1);
+ HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_2);
+
+ TIM8->PSC=TIM8_PSC;
+ TIM8->ARR=TIM8_ARR;
+ HAL_TIM_IC_Start(&htim8, TIM_CHANNEL_1);
 
 
 
@@ -130,6 +159,12 @@ int main(void)
   {
 	  ethernetif_input(&gnetif);
 	      sys_check_timeouts();
+
+	  	capture_tim8_ccr1= TIM8->CCR1;
+	  	if(capture_tim8_ccr1 <= 0)
+	  		speed=0;
+	  	else
+	  		speed=revolution_per_min/capture_tim8_ccr1;
 
 
 
