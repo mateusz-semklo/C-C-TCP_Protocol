@@ -7749,6 +7749,7 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
  80035fe:	f8d7 120c 	ldr.w	r1, [r7, #524]	; 0x20c
  8003602:	4840      	ldr	r0, [pc, #256]	; (8003704 <tcp_echoserver_send+0x220>)
  8003604:	f00f faa5 	bl	8012b52 <strcpy>
+    //sprintf(jstring, "%s",(char *)ptr->payload);
 
     if(settings_allow[0]=='t')
  8003608:	4b40      	ldr	r3, [pc, #256]	; (800370c <tcp_echoserver_send+0x228>)
@@ -7776,7 +7777,7 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 
 
     //wr_err = tcp_write(tpcb, buffereth, strlen(buffereth), 1);
-   // wr_err = tcp_write(tpcb, ptr->payload, ptr->len, 1);
+    //wr_err = tcp_write(tpcb, ptr->payload, ptr->len, 1);
     wr_err = tcp_write(tpcb, jstring, strlen(rendered), 1);
  8003636:	f8d7 020c 	ldr.w	r0, [r7, #524]	; 0x20c
  800363a:	f7fc fdf3 	bl	8000224 <strlen>

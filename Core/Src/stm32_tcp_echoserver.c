@@ -395,6 +395,7 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 
     sprintf(settings_allow, "%s",(char *)(cJSON_GetStringValue(settings)));
     sprintf(jstring, "%s",(char *)rendered);
+    //sprintf(jstring, "%s",(char *)ptr->payload);
 
     if(settings_allow[0]=='t')
     	HAL_UART_Transmit_IT(&huart2, jstring, strlen(jstring));
@@ -405,7 +406,7 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 
 
     //wr_err = tcp_write(tpcb, buffereth, strlen(buffereth), 1);
-   // wr_err = tcp_write(tpcb, ptr->payload, ptr->len, 1);
+    //wr_err = tcp_write(tpcb, ptr->payload, ptr->len, 1);
     wr_err = tcp_write(tpcb, jstring, strlen(rendered), 1);
 
     /* Clear data */
