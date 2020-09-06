@@ -163,7 +163,7 @@ int main(void)
 	  	capture_tim3_ccr1= TIM3->CCR1;
 
 
-	  	if(capture_tim8_ccr1 <= 0)
+	  	if(capture_tim8_ccr1 <= 50)
 	  		speed=0;
 	  	else
 	  		speed=revolution_per_min/capture_tim8_ccr1;

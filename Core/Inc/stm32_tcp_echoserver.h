@@ -12,6 +12,8 @@
 
 #define size 256
 
+int p;
+
 volatile  char jstring[size];
 volatile  char settings_allow[10];
 volatile uint32_t capture_tim8_ccr1;

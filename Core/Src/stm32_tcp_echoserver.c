@@ -41,6 +41,7 @@
 #include "cJSON.h"
 
 
+
 #if LWIP_TCP
 
 static struct tcp_pcb *tcp_echoserver_pcb;
@@ -399,33 +400,36 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
     //sprintf(jstring, "%s",(char *)ptr->payload);
 
     if(settings_allow[0]=='t')
-    	HAL_UART_Transmit_IT(&huart2, jstring, strlen(jstring));
+    	HAL_UART_Transmit_IT(&huart2, jstring, sizeof(jstring));
 
 
-    cJSON_Delete(settings);
+        char  speed_jstring[10];
+        char  angle[10];
+
+       cJSON *head;
+       head = cJSON_CreateObject();
+       sprintf(speed_jstring,"%4.1f",speed);
+       sprintf(angle,"%d",capture_tim3_ccr1);
+
+
+       cJSON_AddItemToObject(head, "speed", cJSON_CreateString(speed_jstring));
+       cJSON_AddItemToObject(head, "encoder", cJSON_CreateString(angle));
+       rendered2 = cJSON_Print(head);
+       sprintf(jstring2, "%s",(char *)rendered2);
+
+       cJSON_Delete(head);
+
+       wr_err = tcp_write(tpcb, jstring2, strlen(rendered2), 1);
+
+
+
+
     cJSON_Delete(root);
-
-     char  speed_jstring[10];
-     char  angle[10];
-
-    cJSON *head;
-    head = cJSON_CreateObject();
-    sprintf(speed_jstring,"%4.1f",speed);
-    sprintf(angle,"%d",capture_tim3_ccr1);
-
-
-    cJSON_AddItemToObject(head, "speed", cJSON_CreateString(speed_jstring));
-    cJSON_AddItemToObject(head, "encoder", cJSON_CreateString(angle));
-    rendered2 = cJSON_Print(head);
-    sprintf(jstring2, "%s",(char *)rendered2);
-
-    cJSON_Delete(head);
-
 
     //wr_err = tcp_write(tpcb, buffereth, strlen(buffereth), 1);
     //wr_err = tcp_write(tpcb, ptr->payload, ptr->len, 1);
      //wr_err = tcp_write(tpcb, jstring, strlen(rendered), 1);
-    wr_err = tcp_write(tpcb, jstring2, strlen(rendered2), 1);
+   // wr_err = tcp_write(tpcb, jstring2, strlen(rendered2), 1);
 
     /* Clear data */
     memset(dane, 0x00, sizeof(dane));
