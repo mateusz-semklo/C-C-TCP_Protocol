@@ -50,7 +50,7 @@ all: ethernet_TCP.elf secondary-outputs
 
 # Tool invocations
 ethernet_TCP.elf: $(OBJS) $(USER_OBJS) C:\Users\Mateusz\STM32CubeIDE\workspace_1.3.0\ethernet_TCP\STM32F746ZGTX_FLASH.ld
-	arm-none-eabi-gcc -o "ethernet_TCP.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\Mateusz\STM32CubeIDE\workspace_1.3.0\ethernet_TCP\STM32F746ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ethernet_TCP.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "ethernet_TCP.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\Mateusz\STM32CubeIDE\workspace_1.3.0\ethernet_TCP\STM32F746ZGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ethernet_TCP.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

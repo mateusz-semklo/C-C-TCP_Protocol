@@ -5,12 +5,21 @@
 #include "cJSON.h"
 #include "usart.h"
 
+#include "stdint.h"
+#include "math.h"
+#include "stdio.h"
+#include "stdlib.h"
+
 #define size 256
 
 volatile  char jstring[size];
 volatile  char settings_allow[10];
-
-
+volatile uint32_t capture_tim8_ccr1;
+volatile uint16_t capture_tim3_ccr1;
+volatile float_t speed;
+volatile  char jstring2[size];
+volatile char *rendered;
+volatile char *rendered2;
 
 
 struct tcp_echoserver_struct{

@@ -75,8 +75,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-volatile uint32_t capture_tim8_ccr1;
-volatile float_t speed;
+
 
 
 /* USER CODE END PV */
@@ -161,10 +160,14 @@ int main(void)
 	      sys_check_timeouts();
 
 	  	capture_tim8_ccr1= TIM8->CCR1;
+	  	capture_tim3_ccr1= TIM3->CCR1;
+
+
 	  	if(capture_tim8_ccr1 <= 0)
 	  		speed=0;
 	  	else
 	  		speed=revolution_per_min/capture_tim8_ccr1;
+
 
 
 
