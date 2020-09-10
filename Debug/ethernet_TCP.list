@@ -7368,11 +7368,11 @@ int main(void)
  80033e2:	801a      	strh	r2, [r3, #0]
 
 
-	  	if(capture_tim8_ccr1 <= 0)
+	  	if(capture_tim8_ccr1 <= 50)
  80033e4:	4b17      	ldr	r3, [pc, #92]	; (8003444 <main+0xdc>)
  80033e6:	681b      	ldr	r3, [r3, #0]
- 80033e8:	2b00      	cmp	r3, #0
- 80033ea:	d104      	bne.n	80033f6 <main+0x8e>
+ 80033e8:	2b32      	cmp	r3, #50	; 0x32
+ 80033ea:	d804      	bhi.n	80033f6 <main+0x8e>
 	  		speed=0;
  80033ec:	4b17      	ldr	r3, [pc, #92]	; (800344c <main+0xe4>)
  80033ee:	f04f 0200 	mov.w	r2, #0
