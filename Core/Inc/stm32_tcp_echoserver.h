@@ -10,18 +10,21 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-#define size 256
+#define sizee 256
 
-int p;
+int p,g;
 
-volatile  char jstring[size];
+volatile static  char jstring[sizee];
 volatile  char settings_allow[10];
 volatile uint32_t capture_tim8_ccr1;
 volatile uint16_t capture_tim3_ccr1;
 volatile float_t speed;
-volatile  char jstring2[size];
-volatile char *rendered;
-volatile char *rendered2;
+volatile  static char jstring2[sizee];
+volatile  static char jstring3[sizee];
+volatile static unsigned char *rendered;
+volatile static unsigned char *rendered2;
+
+char * dd;
 
 
 struct tcp_echoserver_struct{

@@ -347,7 +347,7 @@ static err_t tcp_echoserver_sent(void *arg, struct tcp_pcb *tpcb, u16_t len)
  * @retval err_t: error status
  */
 
-#define USART_COPY 1
+#define USART_COPY 0
 static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_struct *es)
 {
   struct pbuf *ptr;
@@ -359,7 +359,7 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 
   err_t wr_err = ERR_OK;
 
-  for(int i=0; i<size;i++)
+  for(int i=0; i<sizee;i++)
 	  jstring[i]=0;
 
   /* tcp_sndbuf - returns number of bytes in space that is avaliable in output queue */
@@ -389,14 +389,18 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
     // char *rendered2;
      cJSON * root;
      cJSON * settings;
+     cJSON *head;
+
 
      root = cJSON_Parse((char *)ptr->payload);
      settings = cJSON_GetObjectItemCaseSensitive(root, "settings");
 
-     rendered = cJSON_Print(root);
+
+
+     //rendered = cJSON_Print(root);
 
     sprintf(settings_allow, "%s",(char *)(cJSON_GetStringValue(settings)));
-    sprintf(jstring, "%s",(char *)rendered);
+    sprintf(jstring, "%s",(char *)ptr->payload);
     //sprintf(jstring, "%s",(char *)ptr->payload);
 
     if(settings_allow[0]=='t')
@@ -406,7 +410,7 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
         char  speed_jstring[10];
         char  angle[10];
 
-       cJSON *head;
+
        head = cJSON_CreateObject();
        sprintf(speed_jstring,"%4.1f",speed);
        sprintf(angle,"%d",capture_tim3_ccr1);
@@ -414,17 +418,21 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 
        cJSON_AddItemToObject(head, "speed", cJSON_CreateString(speed_jstring));
        cJSON_AddItemToObject(head, "encoder", cJSON_CreateString(angle));
-       rendered2 = cJSON_Print(head);
-       sprintf(jstring2, "%s",(char *)rendered2);
+       dd=cJSON_PrintPreallocated(head, jstring2, sizeof(jstring2),1 );
+      // sprintf(jstring2, "%s",(char *)rendered2);
+       p=sizeof(jstring2);
+       g=strlen(jstring2);
 
        cJSON_Delete(head);
 
-       wr_err = tcp_write(tpcb, jstring2, strlen(rendered2), 1);
+       wr_err = tcp_write(tpcb, jstring2, strlen(jstring2), 1);
 
 
 
-
-    cJSON_Delete(root);
+     cJSON_Delete(head);
+     cJSON_Delete(root);
+     cJSON_free(head);
+     cJSON_free(root);
 
     //wr_err = tcp_write(tpcb, buffereth, strlen(buffereth), 1);
     //wr_err = tcp_write(tpcb, ptr->payload, ptr->len, 1);
@@ -432,7 +440,7 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
    // wr_err = tcp_write(tpcb, jstring2, strlen(rendered2), 1);
 
     /* Clear data */
-    memset(dane, 0x00, sizeof(dane));
+   // memset(dane, 0x00, sizeof(dane));
 
     if (wr_err == ERR_OK)
     {

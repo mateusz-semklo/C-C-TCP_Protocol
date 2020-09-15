@@ -4,5 +4,5 @@ stm32_tcp_echoserver.c:157:14:tcp_echoserver_recv	40	static
 stm32_tcp_echoserver.c:255:13:tcp_echoserver_error	24	static
 stm32_tcp_echoserver.c:275:14:tcp_echoserver_poll	24	static
 stm32_tcp_echoserver.c:316:14:tcp_echoserver_sent	32	static
-stm32_tcp_echoserver.c:351:13:tcp_echoserver_send	592	static
-stm32_tcp_echoserver.c:479:13:tcp_echoserver_connection_close	16	static
+stm32_tcp_echoserver.c:351:13:tcp_echoserver_send	80	static
+stm32_tcp_echoserver.c:487:13:tcp_echoserver_connection_close	16	static
