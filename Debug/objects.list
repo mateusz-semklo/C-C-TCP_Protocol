@@ -1,3 +1,4 @@
+"Core/Src/adc.o"
 "Core/Src/cJSON.o"
 "Core/Src/cJSON_Utils.o"
 "Core/Src/eth.o"
@@ -15,6 +16,8 @@
 "Core/Src/usb_otg.o"
 "Core/Startup/startup_stm32f746zgtx.o"
 "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o"
+"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_adc.o"
+"Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_adc_ex.o"
 "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o"
 "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma.o"
 "Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_dma_ex.o"

@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
 #include "lwip.h"
 #include "tim.h"
 #include "usart.h"
@@ -52,6 +53,11 @@
 #define TIM3_PSC  0
 ////////// TIMER 3 /////////////////////////////////////////////////////////////
 
+////////// TIMER 1 PWM input /////////////////////////////////////////////////////////////
+#define TIM1_ARR  0xFFFF
+#define TIM1_PSC  800
+////////// TIMER 1 PWM input /////////////////////////////////////////////////////////////
+
 
 /* USER CODE END Includes */
 
@@ -75,7 +81,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint32_t adc_Ia,adc_Ib,n;
 
 
 /* USER CODE END PV */
@@ -93,6 +99,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	}
 
 }
+
+void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
+	 adc_Ia= HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
+    //while((hadc1.Instance->SR &= (0x1<<5))!=0){}
+     adc_Ib =HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_2);
+	//while((hadc1.Instance->SR &= (0x1<<5))!=0){}
+
+   HAL_ADCEx_InjectedStart_IT(&hadc1);
+
+}
+
+
 
 
 /* USER CODE END PFP */
@@ -136,6 +155,9 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM8_Init();
   MX_USART2_UART_Init();
+  MX_ADC1_Init();
+  MX_TIM1_Init();
+  MX_TIM9_Init();
   /* USER CODE BEGIN 2 */
   tcp_echoserver_init();
 
@@ -147,6 +169,15 @@ int main(void)
  TIM8->PSC=TIM8_PSC;
  TIM8->ARR=TIM8_ARR;
  HAL_TIM_IC_Start(&htim8, TIM_CHANNEL_1);
+
+ TIM1->PSC=TIM1_PSC;
+ TIM1->ARR=TIM1_ARR;
+ HAL_TIM_Base_Start(&htim1);
+ HAL_TIM_IC_Start(&htim1, TIM_CHANNEL_1);
+
+
+ HAL_ADCEx_InjectedStart_IT(&hadc1);
+
 
 
 

@@ -1,7 +1,7 @@
-ethernetif.c:97:13:low_level_init	32	static
-ethernetif.c:205:14:low_level_output	48	static
-ethernetif.c:289:22:low_level_input	56	static
-ethernetif.c:379:6:ethernetif_input	24	static
-ethernetif.c:434:7:ethernetif_init	16	static
-ethernetif.c:481:7:sys_jiffies	8	static
-ethernetif.c:492:7:sys_now	8	static
+ethernetif.c:96:13:low_level_init	32	static
+ethernetif.c:204:14:low_level_output	48	static
+ethernetif.c:288:22:low_level_input	56	static
+ethernetif.c:378:6:ethernetif_input	24	static
+ethernetif.c:433:7:ethernetif_init	16	static
+ethernetif.c:480:7:sys_jiffies	8	static
+ethernetif.c:491:7:sys_now	8	static

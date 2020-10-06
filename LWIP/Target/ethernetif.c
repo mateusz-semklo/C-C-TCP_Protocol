@@ -79,7 +79,6 @@ ETH_HandleTypeDef heth;
 /* Private functions ---------------------------------------------------------*/
 
 
-
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
