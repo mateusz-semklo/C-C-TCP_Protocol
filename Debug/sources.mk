@@ -22,6 +22,7 @@ Core/Startup \
 Drivers/STM32F7xx_HAL_Driver/Src \
 LWIP/App \
 LWIP/Target \
+Middlewares/Third_Party/ARM_CMSIS/CMSIS/DSP/Include \
 Middlewares/Third_Party/LwIP/src/api \
 Middlewares/Third_Party/LwIP/src/apps/mqtt \
 Middlewares/Third_Party/LwIP/src/core \

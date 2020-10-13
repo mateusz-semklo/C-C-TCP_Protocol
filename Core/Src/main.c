@@ -81,8 +81,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint32_t adc_Ia,adc_Ib,n;
-
+int32_t adc_Ia,adc_Ib,adc_Ic,count,adc_off_Ia,adc_off_Ib,adc_off_Ic;
+float Ia,Ib,Ic;
 
 /* USER CODE END PV */
 
@@ -103,11 +103,33 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
 	 adc_Ia= HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
-    //while((hadc1.Instance->SR &= (0x1<<5))!=0){}
-     adc_Ib =HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_2);
+   //while((hadc1.Instance->SR &= (0x1<<5))!=0){}
+    adc_Ib =HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_2);
 	//while((hadc1.Instance->SR &= (0x1<<5))!=0){}
+    adc_Ic =HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_3);
 
-   HAL_ADCEx_InjectedStart_IT(&hadc1);
+    count++;
+    if(count<5)
+    {
+
+    }
+    else if(count==5)
+    {
+   	 adc_off_Ia=adc_Ia;
+   	 adc_off_Ib=adc_Ib;
+   	 adc_off_Ic=adc_Ic;
+
+    }
+    else
+    {
+    count=10;
+    Ia=-(adc_Ia-adc_off_Ia)* 0.004355;
+    Ib=-(adc_Ib-adc_off_Ib)* 0.004355;
+    Ic=-(adc_Ic-adc_off_Ic)* 0.004355;
+    }
+
+
+  HAL_ADCEx_InjectedStart_IT(&hadc1);
 
 }
 
