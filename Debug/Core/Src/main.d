@@ -71,7 +71,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/stm32_tcp_echoserver.h ../Core/Inc/cJSON.h \
  ../Core/Inc/usart.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/prot/ethernet.h \
- ../Core/Inc/cJSON.h ../Core/Inc/cJSON_Utils.h
+ ../Core/Inc/cJSON.h ../Core/Inc/cJSON_Utils.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/CMSIS/DSP/Include/arm_math.h \
+ ../Middlewares/Third_Party/ARM_CMSIS/CMSIS/Core_A/Include/cmsis_compiler.h
 
 ../Core/Inc/main.h:
 
@@ -234,3 +236,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/cJSON.h:
 
 ../Core/Inc/cJSON_Utils.h:
+
+../Middlewares/Third_Party/ARM_CMSIS/CMSIS/DSP/Include/arm_math.h:
+
+../Middlewares/Third_Party/ARM_CMSIS/CMSIS/Core_A/Include/cmsis_compiler.h:

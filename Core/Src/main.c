@@ -38,6 +38,9 @@
 #include "math.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "arm_math.h"
+
+
 
 #define SYSCLK_FREQ      160000000uL
 
@@ -55,10 +58,10 @@
 
 ////////// TIMER 1 PWM input /////////////////////////////////////////////////////////////
 #define TIM1_ARR  0xFFFF
-#define TIM1_PSC  800
+#define TIM1_PSC  0
 ////////// TIMER 1 PWM input /////////////////////////////////////////////////////////////
 
-
+#define size_curr 20
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -81,8 +84,12 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-int32_t adc_Ia,adc_Ib,adc_Ic,count,adc_off_Ia,adc_off_Ib,adc_off_Ic;
-float Ia,Ib,Ic;
+volatile int32_t adc_Ia,adc_Ib,adc_Ic,count,adc_off_Ia,adc_off_Ib,adc_off_Ic;
+volatile float Ia,Ib,Ic;
+volatile float pomiar[size_curr];
+volatile uint16_t limit;
+volatile float rms;
+
 
 /* USER CODE END PV */
 
@@ -102,30 +109,53 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
+	uint16_t i,j=0;
+
 	 adc_Ia= HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
    //while((hadc1.Instance->SR &= (0x1<<5))!=0){}
     adc_Ib =HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_2);
 	//while((hadc1.Instance->SR &= (0x1<<5))!=0){}
     adc_Ic =HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_3);
 
-    count++;
+
     if(count<5)
     {
-
+    	count++;
     }
     else if(count==5)
     {
-   	 adc_off_Ia=adc_Ia;
-   	 adc_off_Ib=adc_Ib;
-   	 adc_off_Ic=adc_Ic;
+    	 count++;
+    	 adc_off_Ia=adc_Ia;
+   	 	 adc_off_Ib=adc_Ib;
+   	 	 adc_off_Ic=adc_Ic;
 
     }
     else
     {
-    count=10;
-    Ia=-(adc_Ia-adc_off_Ia)* 0.004355;
-    Ib=-(adc_Ib-adc_off_Ib)* 0.004355;
-    Ic=-(adc_Ic-adc_off_Ic)* 0.004355;
+    	Ia=-(adc_Ia-adc_off_Ia)* 0.004355;
+    	Ib=-(adc_Ib-adc_off_Ib)* 0.004355;
+    	Ic=-(adc_Ic-adc_off_Ic)* 0.004355;
+
+    	pomiar[0]=Ia;
+
+    	while(i<(size_curr-1))
+    	{
+    		j++;
+    		pomiar[j]=pomiar[i];
+    		i++;
+
+    	}
+
+    	limit++;
+    	if(limit>=size_curr)
+    	{
+    		arm_rms_f322(pomiar, size_curr, &rms);
+    		limit=size_curr+1;
+
+
+    	}
+
+
     }
 
 
