@@ -19,10 +19,12 @@ volatile  char settings_allow[10];
 volatile uint32_t capture_tim8_ccr1;
 volatile uint16_t capture_tim3_ccr1;
 volatile float_t speed;
+volatile float rms;
 volatile  static char jstring2[sizee];
 volatile  static char jstring3[sizee];
 volatile static unsigned char *rendered;
 volatile static unsigned char *rendered2;
+
 
 char * dd;
 

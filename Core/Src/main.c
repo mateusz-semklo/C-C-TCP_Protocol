@@ -88,7 +88,7 @@ volatile int32_t adc_Ia,adc_Ib,adc_Ic,count,adc_off_Ia,adc_off_Ib,adc_off_Ic;
 volatile float Ia,Ib,Ic;
 volatile float pomiar[size_curr];
 volatile uint16_t limit;
-volatile float rms;
+
 
 
 /* USER CODE END PV */
@@ -246,7 +246,7 @@ int main(void)
 	  	capture_tim3_ccr1= TIM3->CCR1;
 
 
-	  	if(capture_tim8_ccr1 <= 50)
+	  	if(capture_tim8_ccr1 <= 0)
 	  		speed=0;
 	  	else
 	  		speed=revolution_per_min/capture_tim8_ccr1;
