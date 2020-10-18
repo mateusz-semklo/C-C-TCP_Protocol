@@ -423,9 +423,7 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
        cJSON_AddItemToObject(head, "encoder", cJSON_CreateString(angle_jstring));
        cJSON_AddItemToObject(head, "rms", cJSON_CreateString(rms_jstring));
        dd=cJSON_PrintPreallocated(head, jstring2, sizeof(jstring2),1 );
-      // sprintf(jstring2, "%s",(char *)rendered2);
-       p=sizeof(jstring2);
-       g=strlen(jstring2);
+
 
        cJSON_Delete(head);
 

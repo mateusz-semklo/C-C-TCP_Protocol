@@ -10,7 +10,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-#define sizee 256
+#define sizee 300
 
 int p,g;
 
@@ -81,7 +81,7 @@ struct tcp_echoserver_struct{
 
 //--------------------------------------------------------------
 /* Max size of buffer */
-#define  UDP_RECEIVE_MSG_SIZE   150
+#define  UDP_RECEIVE_MSG_SIZE   300
 
 void tcp_echoserver_init(void);
 
