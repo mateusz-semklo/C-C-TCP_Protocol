@@ -409,19 +409,25 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 
         char  speed_jstring[10];
         char  angle_jstring[10];
-        char  rms_jstring[10];
+        char  rms_Ia_jstring[10];
+        char  rms_Ib_jstring[10];
+        char  rms_Ic_jstring[10];
 
 
        head = cJSON_CreateObject();
        sprintf(speed_jstring,"%4.1f",speed);
        sprintf(angle_jstring,"%d",capture_tim3_ccr1);
-       sprintf(rms_jstring,"%1.3f",rms);
+       sprintf(rms_Ia_jstring,"%1.3f",rms_Ia);
+       sprintf(rms_Ib_jstring,"%1.3f",rms_Ib);
+       sprintf(rms_Ic_jstring,"%1.3f",rms_Ic);
 
 
 
        cJSON_AddItemToObject(head, "speed", cJSON_CreateString(speed_jstring));
        cJSON_AddItemToObject(head, "encoder", cJSON_CreateString(angle_jstring));
-       cJSON_AddItemToObject(head, "rms", cJSON_CreateString(rms_jstring));
+       cJSON_AddItemToObject(head, "rms_Ia", cJSON_CreateString(rms_Ia_jstring));
+       cJSON_AddItemToObject(head, "rms_Ib", cJSON_CreateString(rms_Ib_jstring));
+       cJSON_AddItemToObject(head, "rms_Ic", cJSON_CreateString(rms_Ic_jstring));
        dd=cJSON_PrintPreallocated(head, jstring2, sizeof(jstring2),1 );
 
 

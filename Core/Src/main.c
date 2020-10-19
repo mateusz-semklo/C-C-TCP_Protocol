@@ -61,7 +61,7 @@
 #define TIM1_PSC  0
 ////////// TIMER 1 PWM input /////////////////////////////////////////////////////////////
 
-#define size_curr 20
+#define size_curr 40
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -86,7 +86,7 @@
 /* USER CODE BEGIN PV */
 volatile int32_t adc_Ia,adc_Ib,adc_Ic,count,adc_off_Ia,adc_off_Ib,adc_off_Ic;
 volatile float Ia,Ib,Ic;
-volatile float pomiar[size_curr];
+volatile float pomiar_Ia[size_curr],pomiar_Ib[size_curr],pomiar_Ic[size_curr];
 volatile uint16_t limit;
 
 
@@ -136,12 +136,16 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
     	Ib=-(adc_Ib-adc_off_Ib)* 0.004355;
     	Ic=-(adc_Ic-adc_off_Ic)* 0.004355;
 
-    	pomiar[0]=Ia;
+    	pomiar_Ia[0]=Ia;
+    	pomiar_Ib[0]=Ib;
+    	pomiar_Ic[0]=Ic;
 
     	while(i<(size_curr-1))
     	{
     		j++;
-    		pomiar[j]=pomiar[i];
+    		pomiar_Ia[j]=pomiar_Ia[i];
+    		pomiar_Ib[j]=pomiar_Ib[i];
+    		pomiar_Ic[j]=pomiar_Ic[i];
     		i++;
 
     	}
@@ -149,7 +153,9 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
     	limit++;
     	if(limit>=size_curr)
     	{
-    		arm_rms_f322(pomiar, size_curr, &rms);
+    		arm_rms_f322(pomiar_Ia, size_curr, &rms_Ia);
+    		arm_rms_f322(pomiar_Ib, size_curr, &rms_Ib);
+    		arm_rms_f322(pomiar_Ic, size_curr, &rms_Ic);
     		limit=size_curr+1;
 
 
@@ -210,13 +216,16 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_TIM9_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   tcp_echoserver_init();
 
- TIM3->ARR=TIM3_ARR;
- TIM3->PSC=TIM3_PSC;
- HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_1);
- HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_2);
+
+
+ TIM4->ARR=TIM3_ARR;
+ TIM4->PSC=TIM3_PSC;
+ HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_1);
+ HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_2);
 
  TIM8->PSC=TIM8_PSC;
  TIM8->ARR=TIM8_ARR;
@@ -243,13 +252,13 @@ int main(void)
 	      sys_check_timeouts();
 
 	  	capture_tim8_ccr1= TIM8->CCR1;
-	  	capture_tim3_ccr1= TIM3->CCR1;
+	  	capture_tim3_ccr1= TIM4->CCR1;
 
+	  	speed=revolution_per_min/capture_tim8_ccr1;
 
-	  	if(capture_tim8_ccr1 <= 0)
-	  		speed=0;
-	  	else
-	  		speed=revolution_per_min/capture_tim8_ccr1;
+	  	if(speed<120)
+	  	speed=0;
+
 
 
 
