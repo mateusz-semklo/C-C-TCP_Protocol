@@ -397,11 +397,9 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 
 
 
-     //rendered = cJSON_Print(root);
-
     sprintf(settings_allow, "%s",(char *)(cJSON_GetStringValue(settings)));
     sprintf(jstring, "%s",(char *)ptr->payload);
-    //sprintf(jstring, "%s",(char *)ptr->payload);
+
 
     if(settings_allow[0]=='t')
     	HAL_UART_Transmit_IT(&huart2, jstring, sizeof(jstring));
@@ -416,7 +414,7 @@ static void tcp_echoserver_send(struct tcp_pcb *tpcb, struct tcp_echoserver_stru
 
        head = cJSON_CreateObject();
        sprintf(speed_jstring,"%4.1f",speed);
-       sprintf(angle_jstring,"%d",capture_tim3_ccr1);
+       sprintf(angle_jstring,"%d",angle);
        sprintf(rms_Ia_jstring,"%1.3f",rms_Ia);
        sprintf(rms_Ib_jstring,"%1.3f",rms_Ib);
        sprintf(rms_Ic_jstring,"%1.3f",rms_Ic);

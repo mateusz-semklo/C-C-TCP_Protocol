@@ -52,8 +52,8 @@
 ////////// TIMER 8 /////////////////////////////////////////////////////////////
 
 ////////// TIMER 3 encoder /////////////////////////////////////////////////////////////
-#define TIM3_ARR  719
-#define TIM3_PSC  0
+#define TIM4_ARR  1439
+#define TIM4_PSC  0
 ////////// TIMER 3 /////////////////////////////////////////////////////////////
 
 ////////// TIMER 1 PWM input /////////////////////////////////////////////////////////////
@@ -88,6 +88,10 @@ volatile int32_t adc_Ia,adc_Ib,adc_Ic,count,adc_off_Ia,adc_off_Ib,adc_off_Ic;
 volatile float Ia,Ib,Ic;
 volatile float pomiar_Ia[size_curr],pomiar_Ib[size_curr],pomiar_Ic[size_curr];
 volatile uint16_t limit;
+volatile uint8_t direction;
+volatile uint32_t index_angle_loop;
+volatile int32_t counter_angle;
+
 
 
 
@@ -107,9 +111,43 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 }
 
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if(htim->Instance==TIM4)
+	{
+		if(direction==0)
+			counter_angle++;
+		else
+			counter_angle--;
+
+
+
+	}
+
+}
+
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
 	uint16_t i,j=0;
+
+
+  	capture_tim8_ccr1= TIM8->CCR1;
+  	capture_tim4_ccr1= TIM4->CCR1;
+
+  	speed=revolution_per_min/capture_tim8_ccr1;
+
+  	if(direction!=0)  // jeżeli
+  		speed=-speed;
+
+  	if((speed<120) && (speed>-120))
+  	 speed=0;
+
+ 	if(counter_angle>=0)
+	   angle=capture_tim4_ccr1 + (counter_angle * 720);
+	else
+	   angle=-capture_tim4_ccr1 + (counter_angle * 720);
+
+
 
 	 adc_Ia= HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
    //while((hadc1.Instance->SR &= (0x1<<5))!=0){}
@@ -210,7 +248,6 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
   MX_LWIP_Init();
-  MX_TIM3_Init();
   MX_TIM8_Init();
   MX_USART2_UART_Init();
   MX_ADC1_Init();
@@ -222,10 +259,11 @@ int main(void)
 
 
 
- TIM4->ARR=TIM3_ARR;
- TIM4->PSC=TIM3_PSC;
- HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_1);
- HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_2);
+ TIM4->ARR=TIM4_ARR;
+ TIM4->PSC=TIM4_PSC;
+ HAL_TIM_Base_Start_IT(&htim4);
+ HAL_TIM_Encoder_Start_IT(&htim4, TIM_CHANNEL_1);
+ HAL_TIM_Encoder_Start_IT(&htim4, TIM_CHANNEL_2);
 
  TIM8->PSC=TIM8_PSC;
  TIM8->ARR=TIM8_ARR;
@@ -251,14 +289,7 @@ int main(void)
 	  ethernetif_input(&gnetif);
 	      sys_check_timeouts();
 
-	  	capture_tim8_ccr1= TIM8->CCR1;
-	  	capture_tim3_ccr1= TIM4->CCR1;
-
-	  	speed=revolution_per_min/capture_tim8_ccr1;
-
-	  	if(speed<120)
-	  	speed=0;
-
+	    direction= (TIM4->CR1 & 0x10);
 
 
 
